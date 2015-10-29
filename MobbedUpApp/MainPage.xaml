@@ -6,12 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <ListView x:Name="listView_Meetups" HorizontalAlignment="Left" Height="640" VerticalAlignment="Top" Width="360"
+    <ListView x:Name="listView_Meetups" HorizontalAlignment="Left" Height="640" VerticalAlignment="Top" 
               ItemsSource="{Binding Items}">
 
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextBlock Text="{Binding Title}"/>
+                <Grid BorderThickness="1" BorderBrush="Navy" Margin="4" HorizontalAlignment="Stretch" Width="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Title}" />
+                    <TextBlock Grid.Row="1" Text="{Binding StartTime}"/>
+                    <TextBlock Grid.Row="2" Text="{Binding Address}"/>
+                </Grid>
             </DataTemplate>
         </ListView.ItemTemplate>
         
