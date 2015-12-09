@@ -6,23 +6,110 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <ListView x:Name="listView_Meetups" HorizontalAlignment="Left" Height="640" VerticalAlignment="Top" 
-              ItemsSource="{Binding Items}">
+    <Grid x:Name="root">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="grid.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="listView_Meetups.(UIElement.Visibility)">
+                            <Setter.Value>
+                                <Visibility>Visible</Visibility>
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Details">
+                    <VisualState.Setters>
+                        <Setter Target="listView_Meetups.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="grid.(UIElement.Visibility)" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="listView_Meetups" 
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left" VerticalAlignment="Top" 
+			ItemsSource="{Binding Items}"  >
 
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <Grid BorderThickness="1" BorderBrush="Navy" Margin="4" HorizontalAlignment="Stretch" Width="500">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding Title}" />
-                    <TextBlock Grid.Row="1" Text="{Binding StartTime}"/>
-                    <TextBlock Grid.Row="2" Text="{Binding Address}"/>
-                </Grid>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        
-    </ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid BorderThickness="1" BorderBrush="Navy" Margin="4" HorizontalAlignment="Stretch" Width="590">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{Binding Title}" />
+                        <TextBlock Grid.Row="1" Text="{Binding StartTime}"/>
+                        <TextBlock Grid.Row="2" Text="{Binding Address}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <Grid x:Name="grid" BorderBrush="Red" BorderThickness="2" Background="Lavender"
+			Grid.Column="1"
+			Grid.Row="0"
+			DataContext="{Binding SelectedItem, ElementName=listView_Meetups}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Title:"
+				Grid.Column="0"
+				Grid.Row="0"/>
+            <TextBlock x:Name="Title" 
+				Grid.Column="1"
+				Grid.Row="0"
+				Text="{Binding Title}" />
+
+            <TextBlock Text="Address:"
+				Grid.Column="0"
+				Grid.Row="1"/>
+            <TextBlock x:Name="Address" 
+				Grid.Column="1"
+				Grid.Row="1"
+				Text="{Binding Address}" />
+
+            <TextBlock Text="StartTime:"
+				Grid.Column="0"
+				Grid.Row="2"/>
+            <TextBlock x:Name="StartTime" 
+				Grid.Column="1"
+				Grid.Row="2"
+				Text="{Binding StartTime}" />
+
+            <TextBlock Text="Description:"
+				Grid.Column="0"
+				Grid.Row="3"/>
+            <TextBlock x:Name="Description" 
+				Grid.Column="1"
+				Grid.Row="3"
+				Text="{Binding Title}" />
+        </Grid>
+    </Grid>
 </Page>

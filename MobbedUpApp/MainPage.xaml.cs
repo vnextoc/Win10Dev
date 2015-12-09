@@ -31,5 +31,9 @@ namespace MobbedUpApp
 
             this.DataContext = vm;
         }
+
+        private void listView_Meetups_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+        }
     }
 }
